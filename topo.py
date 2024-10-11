@@ -9,13 +9,13 @@ class NetworkTopologyGenerator:
 
     def generate_topology(self, total_servers):
         # Calculate the number of Top-of-Rack (ToR) switches required using ceiling division
-        num_tor_switches = -(-total_servers // self.servers_per_tor)
+        num_tor_switches = (total_servers // self.servers_per_tor) + 1
 
         # Calculate the number of Aggregate switches required using ceiling division
-        num_aggregate_switches = -(-num_tor_switches // self.tors_per_aggregate)
+        num_aggregate_switches = (num_tor_switches // self.tors_per_aggregate) + 1 if num_tor_switches > 1 else 0
 
         # Calculate the number of Spine switches required using ceiling division
-        num_spine_switches = -(-num_aggregate_switches // self.aggregates_per_spine)
+        num_spine_switches = (num_aggregate_switches // self.aggregates_per_spine) + 1 if num_aggregate_switches > 1 else 0
 
         # Return a dictionary containing the topology details
         return {
@@ -25,12 +25,19 @@ class NetworkTopologyGenerator:
             "num_spine_switches": num_spine_switches
         }
 
-    def display_topology(self, topology):
+    def display_topology(self, topology, directory, filename):
         # Print the topology details
         print(f"Total Servers: {topology['total_servers']}")
         print(f"Top-of-Rack Switches: {topology['num_tor_switches']}")
         print(f"Aggregate Switches: {topology['num_aggregate_switches']}")
         print(f"Spine Switches: {topology['num_spine_switches']}")
+
+        # Ensure the directory exists
+        os.makedirs(directory, exist_ok=True)
+
+        # save the topology to a file
+        with open(os.path.join(directory, filename), 'w') as f:
+            f.write(str(topology))
 
     def generate_mermaid_topology(self, topology, directory, filename):
         # Start the mermaid graph definition

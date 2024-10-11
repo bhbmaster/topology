@@ -35,3 +35,15 @@ To generate a topology for 100 servers and save the output to a directory named 
 ```bash
 python main.py 100 output
 ```
+
+To generate all topologies and images with servers in powers of 2 from 1 to 64K, run:
+
+```bash
+bash run_power_of_2.sh
+```
+
+To generate servers in increasing fashion indefinitely until interrupted with Ctrl+C, run:
+
+```bash
+bash run_infinite.sh
+```

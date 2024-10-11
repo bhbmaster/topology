@@ -38,7 +38,7 @@ if __name__ == "__main__":
     topology = topology_generator.generate_topology(total_servers)
     
     # Display the generated topology details
-    topology_generator.display_topology(topology)
+    topology_generator.display_topology(topology, output_directory, f"topology_{total_servers}.json")
     
     # Generate and save the mermaid topology diagram to the specified directory
     topology_generator.generate_mermaid_topology(topology, output_directory, f"topology_{total_servers}.mmd")
