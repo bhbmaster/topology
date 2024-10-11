@@ -23,8 +23,8 @@ echo "============================================"
 echo "* generating topology images"
 for file in $output/*.mmd; do
     echo "* working on mermaid file $file"
-    mmdc -i "$file" -o "${file%.mmd}-mmdc.png"
-    mmdc -i "$file" -o "${file%.mmd}-mmdc.svg"
+    mmdc -i "$file" -o "${file%.mmd}-mmdc.png" -t forest
+    mmdc -i "$file" -o "${file%.mmd}-mmdc.svg" -t forest
 done
 echo "============================================"
 echo "* done"
